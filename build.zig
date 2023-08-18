@@ -60,7 +60,7 @@ pub fn build(b: *Build) void {
         .target = target,
         .optimize = optimize,
     });
-    lib_physfs.addIncludePath(.{ .path = "extern/physfs/src" });
+    lib_physfs.addIncludePath(.{ .path = "src" });
     lib_physfs.linkLibC();
     lib_physfs.defineCMacro("PHYSFS_STATIC", null);
     lib_physfs.defineCMacro("PHYSFS_SUPPORTS_ZIP", if (option_ZIP_support) "1" else "0");
@@ -101,4 +101,10 @@ pub fn build(b: *Build) void {
         },
     }
     b.installArtifact(lib_physfs);
+}
+
+pub const main_header_path = get_sdk_path() ++ "/src/physfs.h";
+
+fn get_sdk_path() []const u8 {
+    return comptime std.fs.path.dirname(@src().file) orelse ".";
 }
