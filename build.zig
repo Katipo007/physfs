@@ -103,10 +103,10 @@ pub fn build(b: *Build) void {
     b.installArtifact(lib_physfs);
 }
 
-pub fn add_include_paths(step: *std.build.CompileStep) void {
+pub fn add_include_paths(step: *Build.Step.Compile) void {
     step.addIncludePath(.{ .path = get_sdk_path() ++ "/src" });
 }
 
 fn get_sdk_path() []const u8 {
-    return comptime std.fs.path.dirname(@src().file) orelse ".";
+    return std.fs.path.dirname(@src().file) orelse ".";
 }
